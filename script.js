@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     const todoInput = document.getElementById("todo-input");
     const addTaskButton = document.getElementById("add-task-btn");
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         tasks.push(newTask);
         saveTasks();
+        renderTasks(newTask);
         todoInput.value = "";
     });
 
@@ -35,6 +37,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if(e.target.tagName === "BUTTON") return;
             task.completed = !task.completed;
             li.classList.toggle("completed");
+            saveTasks();
+        });
+
+        li.querySelector("button").addEventListener("click", (e) => {
+            e.stopPropagation();
+            tasks = tasks.filter((t) => t.id !== task.id);
+            li.remove();
             saveTasks();
         });
 
